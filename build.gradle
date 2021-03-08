@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'idea'
 	id 'eclipse'
+	id 'application'
 }
 
 repositories {
@@ -19,3 +20,17 @@ test {
 		events "passed", "skipped", "failed"
 	}
 }
+
+application {
+	mainClass.set("se.sdaproject.LinkedList")
+}
+
+jar {
+	manifest {
+		attributes(
+				'Main-Class': 'se.sdaproject.LinkedList'
+		)
+	}
+}
+
+
