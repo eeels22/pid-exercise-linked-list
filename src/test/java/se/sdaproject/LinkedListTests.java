@@ -115,4 +115,22 @@ class LinkedListTests {
         LinkedList list = new LinkedList();
         assertEquals(0, list.size());
     }
+
+    @Test
+    void checkGetSizeOfEmptyLinkedList() {
+        LinkedList list = new LinkedList();
+        assertEquals(0, list.getSize());
+    }
+
+    @Test
+    void checkGetSizeOfLinkedList() {
+        LinkedList list = new LinkedList();
+        list.add(5);
+        list.add(3);
+        list.add(7);
+        list.add(9);
+        list.add(1);
+        assertEquals(5, list.getSize());
+    }
+
 }

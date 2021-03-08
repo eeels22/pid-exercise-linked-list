@@ -18,6 +18,7 @@ class Node {
 public class LinkedList {
 
     private Node first = null;
+    private int size = 0;
 
     public void add(int num) {
         // int num is available!
@@ -27,6 +28,7 @@ public class LinkedList {
             // in this case, the linked list is empty
             Node node = new Node(num); // node.next == null
             first = node;
+            size = 1;
         } else {
             // in this case, the linked list is *not* empty
             // this means, first != null
@@ -52,6 +54,7 @@ public class LinkedList {
             // step 4: change the reference of the last node to
             // point to the new node
             current.next = node;
+            size += 1;
         }
 
     }
@@ -165,7 +168,7 @@ public class LinkedList {
     }
 
 
-    // Returns the number of nodes in this list
+    // Returns the number of nodes in this list by counting each node
     public int size() {
         // is the list empty?
         if (first == null) {
@@ -181,6 +184,20 @@ public class LinkedList {
             }
             return size;
         }
+    }
 
+    // Returns the size field of the linked list
+    public int getSize(){
+        return this.size;
+    }
+
+
+
+    public static void main(String[] args) {
+        LinkedList list = new LinkedList();
+        list.add(7);
+        list.add(3);
+        list.add(2);
+        list.toString();
     }
 }
