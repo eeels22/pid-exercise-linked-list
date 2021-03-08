@@ -7,6 +7,7 @@ class Node {
     int elem;
     // field 2: the reference to the next node
     Node next;
+
     Node(int num) {
         this.elem = num;
         this.next = null;
@@ -31,7 +32,7 @@ public class LinkedList {
             // this means, first != null
 
             // step 2: find the last node
-            
+
             // Key: introduce a temporary variable!
             // we can then update this temporary variable,
             // without changing "first"!
@@ -76,7 +77,7 @@ public class LinkedList {
             // go through the chain of nodes, starting with
             // "first"
 
-            Node current = first;            
+            Node current = first;
             // treat first element specially:
             builder.append("" + current.elem);
 
@@ -91,5 +92,39 @@ public class LinkedList {
         // append ")"
         builder.append(")");
         return builder.toString();
+    }
+
+    // Search for some data based on its value.
+    // If we find the element the function should return the index,
+    // otherwise it should return -1.
+    public int search(int num) {
+
+        if (first == null) {
+            // return -1 if list is empty
+            return -1;
+        } else {
+            // search each node for a match.
+            boolean reachedEndOfList = true;
+            Node current = first;
+            int index = -1;
+            // loop while we hav
+            while (reachedEndOfList) {
+                // keep track of indec as we search the nodes
+                index++;
+                if (current.elem == num) {
+                    // return the index if is is a match
+                    return index;
+                } else {
+                    // go to the next node if there is one
+                    if (current.next != null) {
+                        current = current.next;
+                    } else {
+                        reachedEndOfList = false;
+                    }
+                }
+            }
+            // we have reached te end of the list with no match
+            return -1;
+        }
     }
 }

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="se.sdaproject.LinkedListTests" tests="6" skipped="0" failures="0" errors="0" timestamp="2021-03-08T13:22:13" hostname="SDA-Lund-45-mbpro" time="0.031">
+  <properties/>
+  <testcase name="searchDataValueFound()" classname="se.sdaproject.LinkedListTests" time="0.018"/>
+  <testcase name="addANumberToList()" classname="se.sdaproject.LinkedListTests" time="0.005"/>
+  <testcase name="addsTwoNumbers()" classname="se.sdaproject.LinkedListTests" time="0.001"/>
+  <testcase name="testToStringOfEmptyList()" classname="se.sdaproject.LinkedListTests" time="0.002"/>
+  <testcase name="searchDataValueEmptyList()" classname="se.sdaproject.LinkedListTests" time="0.002"/>
+  <testcase name="searchDataValueNotFound()" classname="se.sdaproject.LinkedListTests" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
