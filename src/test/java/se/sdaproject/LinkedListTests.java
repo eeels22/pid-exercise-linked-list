@@ -1,6 +1,7 @@
 package se.sdaproject;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -55,5 +56,63 @@ class LinkedListTests {
         // search for index of value 7, should be -1
         int expected =- 1;
         assertEquals(expected, list.search(7));
+    }
+
+    @Test
+    void getElemByValidIndexShouldReturnIndex(){
+        LinkedList list = new LinkedList();
+        list.add(5);
+        list.add(3);
+        list.add(7);
+        // search for index of value 7, should be 2
+        int expected = 7;
+        assertEquals(expected, list.get(2));
+    }
+
+    @Test
+    void getElemByInvalidIndexShouldThrowException(){
+        LinkedList list = new LinkedList();
+        list.add(5);
+        list.add(3);
+        list.add(7);
+        assertThrows(IndexOutOfBoundsException.class, () -> {
+            list.get(4);
+        });
+    }
+
+    @Test
+    void getElemByNegativeIndexShouldThrowException(){
+        LinkedList list = new LinkedList();
+        list.add(5);
+        list.add(3);
+        list.add(7);
+        assertThrows(IndexOutOfBoundsException.class, () -> {
+            list.get(-2);
+        });
+    }
+
+    @Test
+    void getElemFromEmptyListShouldThrowException(){
+        LinkedList list = new LinkedList();
+        assertThrows(NullPointerException.class, () -> {
+            list.get(4);
+        });
+    }
+
+    @Test
+    void checkSizeOfLinkedList() {
+        LinkedList list = new LinkedList();
+        list.add(5);
+        list.add(3);
+        list.add(7);
+        list.add(9);
+        list.add(1);
+        assertEquals(5, list.size());
+    }
+
+    @Test
+    void checkSizeOfEmptyLinkedList() {
+        LinkedList list = new LinkedList();
+        assertEquals(0, list.size());
     }
 }

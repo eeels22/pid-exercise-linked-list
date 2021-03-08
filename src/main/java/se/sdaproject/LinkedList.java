@@ -123,8 +123,64 @@ public class LinkedList {
                     }
                 }
             }
-            // we have reached te end of the list with no match
+            // we have reached the end of the list with no match
             return -1;
         }
+    }
+
+
+    // gets an element based on its index
+    // (ie its position in the chain of nodes)
+    // throws an exception is the index is not valid
+    public int get(int index) throws NullPointerException {
+        // throw an exception if the list is empty
+        if (first == null) {
+            throw new NullPointerException("The list is empty.");
+        } else if (index < 0) {
+            // throw an exception if the specified index is less than 0
+            throw new IndexOutOfBoundsException("The index should be 0 or higher.");
+        } else {
+            boolean notReachedEndOfList = true;
+            Node current = first;
+            int currentIndex = -1;
+
+            // loop until you reach the specified index.
+            while (notReachedEndOfList) {
+                currentIndex++;
+                if (currentIndex == index) {
+                    // return the elem at the current node is the indices match
+                    return current.elem;
+                } else {
+                    // go to the next node if there is one
+                    if (current.next != null) {
+                        current = current.next;
+                    } else {
+                        notReachedEndOfList = false;
+                    }
+                }
+            }
+        }
+        // throw an exception if the specified index is higher than max index
+        throw new IndexOutOfBoundsException("That index is too high.");
+    }
+
+
+    // Returns the number of nodes in this list
+    public int size() {
+        // is the list empty?
+        if (first == null) {
+            return 0;
+        } else {
+            Node current = first;
+            int size = 1;
+            while (current.next != null) {
+                // count the next node
+                size++;
+                // go to the next node
+                current = current.next;
+            }
+            return size;
+        }
+
     }
 }
