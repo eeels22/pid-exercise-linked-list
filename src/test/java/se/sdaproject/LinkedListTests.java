@@ -59,18 +59,37 @@ class LinkedListTests {
     }
 
     @Test
-    void getElemByValidIndexShouldReturnIndex(){
+    void getElementByValidIndex(){
         LinkedList list = new LinkedList();
         list.add(5);
         list.add(3);
         list.add(7);
-        // search for index of value 7, should be 2
+        int expected = 3;
+        assertEquals(expected, list.get(1));
+    }
+
+    @Test
+    void getLastElementByValidIndex(){
+        LinkedList list = new LinkedList();
+        list.add(5);
+        list.add(3);
+        list.add(7);
         int expected = 7;
         assertEquals(expected, list.get(2));
     }
 
     @Test
-    void getElemByInvalidIndexShouldThrowException(){
+    void getFirstElementByValidIndex(){
+        LinkedList list = new LinkedList();
+        list.add(5);
+        list.add(3);
+        list.add(7);
+        int expected = 5;
+        assertEquals(expected, list.get(0));
+    }
+
+    @Test
+    void getElementByInvalidIndexShouldThrowException(){
         LinkedList list = new LinkedList();
         list.add(5);
         list.add(3);
@@ -97,6 +116,16 @@ class LinkedListTests {
         assertThrows(NullPointerException.class, () -> {
             list.get(4);
         });
+    }
+
+    @Test
+    void getNodeByValidIndex(){
+        LinkedList list = new LinkedList();
+        list.add(5);
+        list.add(3);
+        list.add(7);
+        int expected = 3;
+        assertEquals(expected, list.getNode(1).elem);
     }
 
     @Test
@@ -141,9 +170,8 @@ class LinkedListTests {
         list.add(7);
         list.add(9);
         list.add(1);
-        // list.remove(0);
-        //assertEquals(3, list.get(0));
         assertEquals(5, list.remove(0));
+        assertEquals(3, list.get(0));
         assertEquals(4, list.getSize());
     }
 
@@ -156,6 +184,7 @@ class LinkedListTests {
         list.add(9); // to be removed
         list.add(1);
         list.remove(3);
+//        assertEquals(9, list.remove(3));
         assertEquals(1, list.get(3));
         assertEquals(4, list.getSize());
     }
@@ -168,11 +197,12 @@ class LinkedListTests {
         list.add(7);
         list.add(9);
         list.add(1); // to be removed
-        list.remove(4);
+        int elem = list.remove(4);
         assertThrows(IndexOutOfBoundsException.class, () -> {
             list.get(4);
         });
         assertEquals(4, list.getSize());
+        assertEquals(1, elem);
     }
 
     @Test

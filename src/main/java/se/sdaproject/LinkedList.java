@@ -217,59 +217,55 @@ public class LinkedList {
      * @throws IndexOutOfBoundsException if the index is invalid
      */
     public int remove(int index) throws IndexOutOfBoundsException {
-        if (index < 0 || index > (getSize() - 1)) {
+        if (index < 0 || index >= getSize()) {
             throw new IndexOutOfBoundsException("The index is out of range or the list is empty.");
         }
 
-        int tempElem; // stores data of node to be removed
-
-        if (index == 0 && getSize() > 1) { // remove first node and update the first reference
-            tempElem = first.elem;
-            first = first.next; // next node becomes the first
-        } else if (index == 0 && getSize() == 1) { // list emptied so no first node
-            tempElem = first.elem;
+        Node nodeToRemove = getNode(index);
+        if (index == 0 && getSize() == 1) { // remove first node, first pointer is null
             first = null;
-        } else if (index == getSize() - 1) { // remove last node
-            tempElem = getNode(index - 1).elem;
+        } else if (index == 0 && getSize() > 1) { // remove first node, update first pointer
+            first = first.next;
+        } else if (index == getSize() - 1) { // remove last node, next pointer is null
             getNode(index - 1).next = null;
-        } else { // remove a middle node
-            tempElem = getNode(index - 1).elem;
-            getNode(index - 1).next = getNode(index - 1).next.next; // previous node's next becomes the one after the removed node
+        } else {                             // remove a middle node
+            Node nodeBefore = getNode(index - 1);
+            nodeBefore.next = nodeBefore.next.next; // previous node's next becomes the one after the removed node
         }
         size -= 1;
-        return tempElem;
-   }
+        return nodeToRemove.elem;
+    }
 
 
-        /**
-         * Gets a Node based on its index.
-         *
-         * @return the Node at that index
-         * @throws NullPointerException      if the list is empty
-         * @throws IndexOutOfBoundsException if the specified index is not valid
-         */
-        private Node getNode ( int index) throws NullPointerException, IndexOutOfBoundsException {
-            if (first == null) {
-                throw new NullPointerException("The list is empty.");
-            } else if (index < 0) {
-                throw new IndexOutOfBoundsException("The index should be 0 or higher.");
-            } else {
-                boolean notReachedEndOfList = true;
-                Node current = first;
-                int currentIndex = -1;
-                while (notReachedEndOfList) {
-                    currentIndex++;
-                    if (currentIndex == index) {
-                        return current;
+    /**
+     * Gets a Node based on its index.
+     *
+     * @return the Node at that index
+     * @throws NullPointerException      if the list is empty
+     * @throws IndexOutOfBoundsException if the specified index is not valid
+     */
+    public Node getNode(int index) throws IndexOutOfBoundsException {
+        if (index < 0) { // index is invalid
+            throw new IndexOutOfBoundsException("That index is out of range.");
+        } else {
+            boolean searching = true;
+            Node current = first;
+            int currentIndex = -1;
+            while (searching) { // loop until the specified index or end of list
+                currentIndex++;
+                if (currentIndex == index) { // reached specified index
+                    return current;
+                } else {
+                    if (current.next != null) { // go to the next node if there is one
+                        current = current.next;
                     } else {
-                        if (current.next != null) {
-                            current = current;
-                        } else {
-                            notReachedEndOfList = false;
-                        }
+                        searching = false; // stop searching at the end
                     }
                 }
             }
-            throw new IndexOutOfBoundsException("That index is too high.");
         }
+        // index is higher than max
+        throw new IndexOutOfBoundsException("The index is too high.");
     }
+
+}
