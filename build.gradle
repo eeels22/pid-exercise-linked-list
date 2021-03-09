@@ -22,7 +22,7 @@ test {
 }
 
 application {
-	mainClass.set("se.sdaproject.LinkedList")
+//	mainClass.set("se.sdaproject.LinkedList")
 }
 
 jar {

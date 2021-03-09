@@ -133,4 +133,59 @@ class LinkedListTests {
         assertEquals(5, list.getSize());
     }
 
+    @Test
+    void checkRemovalOfFirstNode() {
+        LinkedList list = new LinkedList();
+        list.add(5); // to be removed
+        list.add(3);
+        list.add(7);
+        list.add(9);
+        list.add(1);
+        // list.remove(0);
+        //assertEquals(3, list.get(0));
+        assertEquals(5, list.remove(0));
+        assertEquals(4, list.getSize());
+    }
+
+    @Test
+    void checkRemovalOfMiddleNode() {
+        LinkedList list = new LinkedList();
+        list.add(5);
+        list.add(3);
+        list.add(7);
+        list.add(9); // to be removed
+        list.add(1);
+        list.remove(3);
+        assertEquals(1, list.get(3));
+        assertEquals(4, list.getSize());
+    }
+
+    @Test
+    void checkRemovalOfLastNode() {
+        LinkedList list = new LinkedList();
+        list.add(5);
+        list.add(3);
+        list.add(7);
+        list.add(9);
+        list.add(1); // to be removed
+        list.remove(4);
+        assertThrows(IndexOutOfBoundsException.class, () -> {
+            list.get(4);
+        });
+        assertEquals(4, list.getSize());
+    }
+
+    @Test
+    void checkInvalidRemoval() {
+        LinkedList list = new LinkedList();
+        list.add(5);
+        list.add(3);
+        list.add(7);
+        list.add(9);
+        list.add(1);
+        assertThrows(IndexOutOfBoundsException.class, () -> {
+            list.remove(10);
+        });
+    }
+
 }

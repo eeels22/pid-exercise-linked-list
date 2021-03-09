@@ -1,6 +1,8 @@
 package se.sdaproject;
 
-// a "box" in our previous picture
+/**
+ * Holds a piece of data (int) and a reference to the next node.
+ */
 class Node {
     // field 1: the data
     // in our case just an integer
@@ -14,12 +16,25 @@ class Node {
     }
 }
 
-
+/**
+ * A chain of nodes which has a first node which points to th next node and so on.
+ */
 public class LinkedList {
 
     private Node first = null;
     private int size = 0;
 
+    public static void main(String[] args) {
+        LinkedList list = new LinkedList();
+        list.add(7);
+        list.add(3);
+        list.add(2);
+        list.toString();
+    }
+
+    /**
+     * Adds a node storing the specified number to the end of linked list
+     */
     public void add(int num) {
         // int num is available!
 
@@ -59,7 +74,12 @@ public class LinkedList {
 
     }
 
-    // useful for testing!
+    /**
+     * Returns the linked list as a string in the format: LinkedList(elem1, elem2...)
+     * Useful for testing
+     *
+     * @return the linked list contents as a string
+     */
     public String toString() {
         // goal is to return a string like this:
         // "LinkedList(5,2,10)"
@@ -97,107 +117,159 @@ public class LinkedList {
         return builder.toString();
     }
 
-    // Search for some data based on its value.
-    // If we find the element the function should return the index,
-    // otherwise it should return -1.
+    /**
+     * Searches for some data based on its value.
+     * If we find the element the function should return the index,
+     * otherwise it should return -1.
+     *
+     * @return the index where the value is held, or -1 if not found
+     */
     public int search(int num) {
 
         if (first == null) {
-            // return -1 if list is empty
-            return -1;
+            // skip to return -1 if list is empty
         } else {
-            // search each node for a match.
-            boolean reachedEndOfList = true;
+            boolean searching = true;
             Node current = first;
             int index = -1;
-            // loop while we hav
-            while (reachedEndOfList) {
-                // keep track of indec as we search the nodes
+
+            while (searching) {
                 index++;
                 if (current.elem == num) {
-                    // return the index if is is a match
-                    return index;
-                } else {
-                    // go to the next node if there is one
+                    return index; // return the index if is is a match
+                } else { // go to the next node if there is one
                     if (current.next != null) {
                         current = current.next;
                     } else {
-                        reachedEndOfList = false;
+                        searching = false; // searched all nodes without success
                     }
                 }
             }
-            // we have reached the end of the list with no match
-            return -1;
         }
+        return -1;
     }
 
-
-    // gets an element based on its index
-    // (ie its position in the chain of nodes)
-    // throws an exception is the index is not valid
-    public int get(int index) throws NullPointerException {
-        // throw an exception if the list is empty
-        if (first == null) {
-            throw new NullPointerException("The list is empty.");
-        } else if (index < 0) {
-            // throw an exception if the specified index is less than 0
-            throw new IndexOutOfBoundsException("The index should be 0 or higher.");
+    /**
+     * Gets an element based on its index
+     * (ie its position in the chain of nodes)
+     *
+     * @return elem (data) at that index
+     * @throws IndexOutOfBoundsException if the specified index is not valid
+     */
+    public int get(int index) throws IndexOutOfBoundsException {
+        if (index < 0) { // index is invalid
+            throw new IndexOutOfBoundsException("That index is out of range.");
         } else {
-            boolean notReachedEndOfList = true;
+            boolean searching = true;
             Node current = first;
             int currentIndex = -1;
-
-            // loop until you reach the specified index.
-            while (notReachedEndOfList) {
+            while (searching) { // loop until the specified index or end of list
                 currentIndex++;
-                if (currentIndex == index) {
-                    // return the elem at the current node is the indices match
+                if (currentIndex == index) { // reached specified index
                     return current.elem;
                 } else {
-                    // go to the next node if there is one
-                    if (current.next != null) {
+                    if (current.next != null) { // go to the next node if there is one
                         current = current.next;
                     } else {
-                        notReachedEndOfList = false;
+                        searching = false; // stop searching at the end
                     }
                 }
             }
         }
-        // throw an exception if the specified index is higher than max index
-        throw new IndexOutOfBoundsException("That index is too high.");
+        // index is higher than max
+        throw new IndexOutOfBoundsException("The index is too high.");
     }
 
-
-    // Returns the number of nodes in this list by counting each node
+    /**
+     * Returns the number of nodes in this list by counting each node
+     *
+     * @return the size of the list
+     * @Deprecated use getSize method instead
+     */
     public int size() {
-        // is the list empty?
-        if (first == null) {
+        if (first == null) { // list is empty
             return 0;
-        } else {
+        } else { // list not empty
             Node current = first;
             int size = 1;
             while (current.next != null) {
-                // count the next node
-                size++;
-                // go to the next node
+                size++; // count the next node if there is one
                 current = current.next;
             }
             return size;
         }
     }
 
-    // Returns the size field of the linked list
-    public int getSize(){
+    /**
+     * Returns the size field of the linked list
+     *
+     * @return the size of the list
+     */
+    public int getSize() {
         return this.size;
     }
 
+    /**
+     * Removes the node at the specified index and returns its element (data)
+     *
+     * @param index of the element to be removed
+     * @return the element previously at the specified position
+     * @throws IndexOutOfBoundsException if the index is invalid
+     */
+    public int remove(int index) throws IndexOutOfBoundsException {
+        if (index < 0 || index > (getSize() - 1)) {
+            throw new IndexOutOfBoundsException("The index is out of range or the list is empty.");
+        }
+
+        int tempElem; // stores data of node to be removed
+
+        if (index == 0 && getSize() > 1) { // remove first node and update the first reference
+            tempElem = first.elem;
+            first = first.next; // next node becomes the first
+        } else if (index == 0 && getSize() == 1) { // list emptied so no first node
+            tempElem = first.elem;
+            first = null;
+        } else if (index == getSize() - 1) { // remove last node
+            tempElem = getNode(index - 1).elem;
+            getNode(index - 1).next = null;
+        } else { // remove a middle node
+            tempElem = getNode(index - 1).elem;
+            getNode(index - 1).next = getNode(index - 1).next.next; // previous node's next becomes the one after the removed node
+        }
+        size -= 1;
+        return tempElem;
+   }
 
 
-    public static void main(String[] args) {
-        LinkedList list = new LinkedList();
-        list.add(7);
-        list.add(3);
-        list.add(2);
-        list.toString();
+        /**
+         * Gets a Node based on its index.
+         *
+         * @return the Node at that index
+         * @throws NullPointerException      if the list is empty
+         * @throws IndexOutOfBoundsException if the specified index is not valid
+         */
+        private Node getNode ( int index) throws NullPointerException, IndexOutOfBoundsException {
+            if (first == null) {
+                throw new NullPointerException("The list is empty.");
+            } else if (index < 0) {
+                throw new IndexOutOfBoundsException("The index should be 0 or higher.");
+            } else {
+                boolean notReachedEndOfList = true;
+                Node current = first;
+                int currentIndex = -1;
+                while (notReachedEndOfList) {
+                    currentIndex++;
+                    if (currentIndex == index) {
+                        return current;
+                    } else {
+                        if (current.next != null) {
+                            current = current;
+                        } else {
+                            notReachedEndOfList = false;
+                        }
+                    }
+                }
+            }
+            throw new IndexOutOfBoundsException("That index is too high.");
+        }
     }
-}
